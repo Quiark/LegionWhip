@@ -1,0 +1,15 @@
+[Unit]
+Description=Legion Whip
+
+[Service]
+Type=simple
+ExecStart={{ legion_whip.path }}/launcher.sh
+
+User={{ legion_whip.sys.user }}
+Group={{ legion_whip.sys.group }}
+
+
+LimitNOFILE=8192
+
+[Install]
+WantedBy=multi-user.target

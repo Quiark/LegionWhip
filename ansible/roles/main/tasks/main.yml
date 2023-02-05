@@ -1,0 +1,40 @@
+---
+- name: app dir
+  file:
+    state: directory
+    path: "{{ legion_whip.path }}"
+
+- name: legion_whip service config file
+  copy:
+    content: "{{ lookup('template', './templates/service.j2') }}"
+    dest: "/etc/systemd/system/{{ legion_whip.sys.svc }}.service"
+    owner: root
+    group: root
+
+- name: legion_whip service start
+  ansible.builtin.systemd:
+    name: "{{ legion_whip.sys.svc }}"
+    state: started
+    enabled: yes
+    daemon_reload: yes
+
+- name: legion_whip copy the app
+  copy:
+    dest: "{{ legion_whip.path }}/{{ item }}"
+    owner: "{{ legion_whip.sys.user }}"
+    group: "{{ legion_whip.sys.group }}"
+    src: "../{{ item }}"
+  loop:
+    - package.json
+    - questing.unpacked.abi.json
+    - prod_secrets.env
+    - launcher.sh
+    - yarn.lock
+    - src/
+    - 6232623864386532366636626231303863646163373435393036643938633037.json
+
+- name: launcher executable
+  file:
+    state: file
+    path: "{{ legion_whip.path }}/launcher.sh"
+    mode: 'u=rwx,g=rx,o=rx'

@@ -1,0 +1,8 @@
+---
+# TODO this file should only have defaults for celestia role, global stuff goes to inventory vars
+legion_whip:
+  path: "/opt/legion_whip"
+  sys:
+    user: roman
+    group: roman
+    svc: legion_whip

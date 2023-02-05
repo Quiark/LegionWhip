@@ -1,0 +1,5 @@
+all:
+  hosts:
+    tufir.valid:
+  vars:
+    # TODO merging of same key from 2 sources (here and role default) doesn't work, need to put it all here i guess
